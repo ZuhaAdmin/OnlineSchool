@@ -1,8 +1,10 @@
 import email
 from tabnanny import verbose
+from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
+from lessons.models import Sinflar
 
 from .managers import CustomUserManager
 
@@ -17,7 +19,8 @@ class CustomUser(AbstractUser):
     gender = models.CharField(_('gender'), choices=GENDER_CHOICES, max_length=5)
     name = models.CharField(_('name'), max_length=20)
     lastname = models.CharField(_('lastname'), max_length=20)
-    sinf = models.IntegerField(_('class'))
+    sinf = models.ForeignKey(Sinflar, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="users-image/")
 
     USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = ['email', 'username', 'name', 'sinf']
